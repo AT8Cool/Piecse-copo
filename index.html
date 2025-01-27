@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative AI Fact</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #282c34; /* Dark mode background */
+            color: white;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s, color 0.5s;
+            position: relative;
+        }
+
+        body.light-mode {
+            background-color: #f0f0f0; /* Light mode background */
+            color: #282c34; /* Light mode text color */
+        }
+
+        #fact-container {
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            max-width: 600px; /* Set a maximum width */
+            width: 90%; /* Allow it to be responsive */
+            margin: 20px; /* Add margin for spacing */
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Toggle Switch Styles */
+        .toggle-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle {
+            width: 50px;
+            height: 24px;
+            background-color: #ccc;
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 10px; /* Space between toggle and indicator */
+        }
+
+        .toggle.light-mode {
+            background-color: #007bff;
+        }
+
+        .toggle::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            top: 1px;
+            left: 1px;
+            transition: transform 0.3s;
+        }
+
+        .toggle.light-mode::before {
+            transform: translateX(26px);
+        }
+
+        #mode-indicator {
+            margin-top: 10px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="toggle-container">
+        <div id="toggle-button" class="toggle"></div>
+    </div>
+    <div id="mode-indicator">Current Mode: Dark Mode</div>
+    <div id="fact-container">
+        <h1 id="fact"></h1>
+    </div>
+    <button id="regenerate-button">Get Another Fact</button>
+    <script>
+        const facts = [
+            "Generative AI refers to algorithms that can generate new content, including text, images, music, and more.",
+            "One of the most popular models for text generation is OpenAI's GPT (Generative Pre-trained Transformer).",
+            "Generative AI can be used in various applications, including content creation, game development, and drug discovery.",
+            "These models are trained on large datasets to learn patterns and structures in the data.",
+            "Generative AI can create realistic images and videos, leading to advancements in fields like virtual reality and film.",
+            "Ethical concerns surrounding GenAI include issues of copyright, misinformation, and the potential for misuse.",
+            "Generative Adversarial Networks (GANs) are a class of machine learning frameworks used in GenAI for generating new data.",
+            "GenAI can assist in automating repetitive tasks, allowing humans to focus on more creative and strategic work.",
+            "The technology behind GenAI is rapidly evolving, with new models and techniques being developed regularly.",
+            "Generative AI has the potential to revolutionize industries by enhancing creativity and productivity."
+        ];
+
+        function displayRandomFact() {
+            const randomFact = facts[Math.floor(Math.random() * facts.length)];
+            const factElement = document.getElementById('fact');
+            factElement.innerText = randomFact;
+
+            // Fade in effect
+            const factContainer = document.getElementById('fact-container');
+            factContainer.style.opacity = 1;
+        }
+
+        // Initial fact display
+        displayRandomFact();
+
+        // Regenerate fact on button click
+        document.getElementById('regenerate-button').addEventListener('click', displayRandomFact);
+
+        // Toggle light/dark mode
+        const toggleButton = document.getElementById('toggle-button');
+        const modeIndicator = document.getElementById('mode-indicator');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            toggleButton.classList.toggle('light-mode');
+            modeIndicator.innerText = document.body.classList.contains('light-mode') ? 'Current Mode: Light Mode' : 'Current Mode: Dark Mode';
+            modeIndicator.style.opacity = 1; // Show the indicator
+
+            // Hide the mode indicator after 3 seconds
+            setTimeout(() => {
+                modeIndicator.style.opacity = 0;
+            }, 3000);
+        });
+
+        // Hide the mode indicator after initial display
+        setTimeout(() => {
+            modeIndicator.style.opacity = 0;
+        }, 3000);
+    </script>
+</body>
+</html>
